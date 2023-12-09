@@ -7,8 +7,8 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class Apple extends Fruit {
-    public Apple(int width, int height, int cellSize) {
-        super(width, height, cellSize);
+    public Apple(int rowCellsCount, int colCellsCount, int cellSize) {
+        super(rowCellsCount, colCellsCount, cellSize);
 
         try {
             InputStream inputStream = getClass().getResourceAsStream("apple.png");

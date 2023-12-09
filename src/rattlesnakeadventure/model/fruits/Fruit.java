@@ -10,15 +10,15 @@ public abstract class Fruit {
     protected BufferedImage icon;
     private Random rand;
 
-    public Fruit(int width, int height, int cellSize) {
+    public Fruit(int rowCellsCount, int colCellsCount, int cellSize) {
         rand = new Random();
-        coord = new Coordinate(rand.nextInt((int) (width / cellSize)) * cellSize,
-                rand.nextInt((int) (height / cellSize)) * cellSize);
+        coord = new Coordinate(rand.nextInt(rowCellsCount) * cellSize,
+                rand.nextInt(colCellsCount) * cellSize);
     }
 
-    public void genRandCoord(int width, int height, int cellSize) {
-        coord.setX(rand.nextInt((int) (width / cellSize)) * cellSize);
-        coord.setY(rand.nextInt((int) (height / cellSize)) * cellSize);
+    public void genRandCoord(int rowCellsCount, int colCellsCount, int cellSize) {
+        coord.setX(rand.nextInt(rowCellsCount) * cellSize);
+        coord.setY(rand.nextInt(colCellsCount) * cellSize);
     }
 
     public Coordinate getCoord() {

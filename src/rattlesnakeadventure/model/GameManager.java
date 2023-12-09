@@ -1,21 +1,22 @@
 package rattlesnakeadventure.model;
 
 public class GameManager {
-    private int width;
-    private int height;
+    private int rowCellsCount;
+    private int colCellsCount;
+    private int totalCellsCount;
     private int cellSize;
-    private int cellsCount;
-    private int delay;
 
     public GameManager() {
-
+        this.rowCellsCount = 100 / cellSize;
+        this.colCellsCount = 100 / cellSize;
+        this.totalCellsCount = rowCellsCount * colCellsCount;
+        this.cellSize = 1;
     }
 
-    public GameManager(int width, int height, int cellSize, int cellsCount, int delay) {
-        this.width = width;
-        this.height = height;
+    public GameManager(int width, int height, int cellSize) {
+        this.rowCellsCount = width / cellSize;
+        this.colCellsCount = height / cellSize;
+        this.totalCellsCount = rowCellsCount * colCellsCount;
         this.cellSize = cellSize;
-        this.cellsCount = cellsCount;
-        this.delay = delay;
     }
 }
