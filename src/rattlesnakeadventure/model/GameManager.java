@@ -7,11 +7,11 @@ public class GameManager {
     private int cellsCount;
     private int delay;
 
-    GameManager() {
+    public GameManager() {
 
     }
 
-    GameManager(int width, int height, int cellSize, int cellsCount, int delay) {
+    public GameManager(int width, int height, int cellSize, int cellsCount, int delay) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
