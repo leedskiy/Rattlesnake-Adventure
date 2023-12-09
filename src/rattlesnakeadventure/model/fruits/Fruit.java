@@ -1,7 +1,9 @@
-package rattlesnakeadventure.model;
+package rattlesnakeadventure.model.fruits;
 
 import java.awt.image.BufferedImage;
 import java.util.Random;
+
+import rattlesnakeadventure.model.Coordinate;
 
 public abstract class Fruit {
     protected Coordinate coord;
