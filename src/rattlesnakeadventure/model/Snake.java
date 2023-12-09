@@ -11,6 +11,7 @@ public class Snake {
     private Random rand;
 
     public Snake() {
+        parts = new ArrayList<Coordinate>();
         this.partsCount = 2;
         this.eatenFruitsCount = 0;
         setRandomDirection();
@@ -32,6 +33,33 @@ public class Snake {
                 break;
             case (4):
                 this.direction = 'L';
+                break;
+        }
+    }
+
+    public void move(int cellSize) {
+        for (int i = partsCount - 1; i > 0; i--) {
+            Coordinate currentPart = parts.get(i);
+            Coordinate previousPart = parts.get(i - 1);
+
+            currentPart.setX(previousPart.getX());
+            currentPart.setY(previousPart.getY());
+        }
+
+        Coordinate head = parts.get(0);
+
+        switch (this.direction) {
+            case 'U':
+                head.setY(head.getY() - cellSize);
+                break;
+            case 'R':
+                head.setX(head.getX() + cellSize);
+                break;
+            case 'D':
+                head.setY(head.getY() + cellSize);
+                break;
+            case 'L':
+                head.setX(head.getX() - cellSize);
                 break;
         }
     }
