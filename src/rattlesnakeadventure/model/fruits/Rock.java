@@ -6,16 +6,16 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-public class Banana extends GameObject {
-    public Banana(int rowCellsCount, int colCellsCount, int cellSize) {
+public class Rock extends GameObject {
+    public Rock(int rowCellsCount, int colCellsCount, int cellSize) {
         super(rowCellsCount, colCellsCount, cellSize);
 
         try {
-            InputStream inputStream = getClass().getResourceAsStream("banana.png");
+            InputStream inputStream = getClass().getResourceAsStream("rock.png");
             if (inputStream != null) {
                 this.icon = ImageIO.read(inputStream);
             } else {
-                System.err.println("Can not find image: banana.png");
+                System.err.println("Can not find image: rock.png");
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-public class Apple extends Fruit {
+public class Apple extends GameObject {
     public Apple(int rowCellsCount, int colCellsCount, int cellSize) {
         super(rowCellsCount, colCellsCount, cellSize);
 

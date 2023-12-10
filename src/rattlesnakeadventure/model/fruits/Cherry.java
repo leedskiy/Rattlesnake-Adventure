@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-public class Cherry extends Fruit {
+public class Cherry extends GameObject {
     public Cherry(int rowCellsCount, int colCellsCount, int cellSize) {
         super(rowCellsCount, colCellsCount, cellSize);
 

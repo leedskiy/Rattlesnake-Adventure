@@ -5,12 +5,12 @@ import java.util.Random;
 
 import rattlesnakeadventure.model.Coordinate;
 
-public abstract class Fruit {
+public abstract class GameObject {
     protected Coordinate coord;
     protected BufferedImage icon;
     private Random rand;
 
-    public Fruit(int rowCellsCount, int colCellsCount, int cellSize) {
+    public GameObject(int rowCellsCount, int colCellsCount, int cellSize) {
         rand = new Random();
         coord = new Coordinate(rand.nextInt(rowCellsCount) * cellSize,
                 rand.nextInt(colCellsCount) * cellSize);
