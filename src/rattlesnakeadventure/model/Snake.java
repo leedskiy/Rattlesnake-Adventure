@@ -1,7 +1,12 @@
 package rattlesnakeadventure.model;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class Snake {
     private ArrayList<Coordinate> parts;
@@ -9,16 +14,20 @@ public class Snake {
     private int eatenFruitsCount;
     private char direction;
     private Random rand;
+    protected BufferedImage headIcon;
+    protected BufferedImage bodyIcon;
+    protected BufferedImage tailIcon;
 
-    public Snake() {
-        parts = new ArrayList<Coordinate>();
+    public Snake(int cellSize, int rowCellsCount, int colCellsCount) {
         this.partsCount = 2;
         this.eatenFruitsCount = 0;
         setRandomDirection();
+        initParts(cellSize, rowCellsCount, colCellsCount);
+        setIcons();
     }
 
     private void setRandomDirection() {
-        rand = new Random();
+        this.rand = new Random();
         int randNum = rand.nextInt(4) + 1;
 
         switch (randNum) {
@@ -34,6 +43,94 @@ public class Snake {
             case (4):
                 this.direction = 'L';
                 break;
+        }
+    }
+
+    private void initParts(int cellSize, int rowCellsCount, int colCellsCount) {
+        this.parts = new ArrayList<Coordinate>(this.partsCount);
+
+        int initialX = (rowCellsCount / 2) * cellSize;
+        int initialY = (colCellsCount / 2) * cellSize;
+
+        parts.add(new Coordinate(initialX, initialY));
+        switch (this.direction) {
+            case 'U':
+                this.parts.add(new Coordinate(initialX, initialY + cellSize));
+                break;
+            case 'R':
+                this.parts.add(new Coordinate(initialX - cellSize, initialY));
+                break;
+            case 'D':
+                this.parts.add(new Coordinate(initialX, initialY - cellSize));
+                break;
+            case 'L':
+                this.parts.add(new Coordinate(initialX + cellSize, initialY));
+                break;
+        }
+    }
+
+    private void setIcons() {
+        try {
+            InputStream inputStream = getClass().getResourceAsStream("snakeHead.png");
+            if (inputStream != null) {
+                this.headIcon = ImageIO.read(inputStream);
+            } else {
+                System.err.println("Can not find image: snakeHead.png");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            InputStream inputStream = getClass().getResourceAsStream("snakeBody.png");
+            if (inputStream != null) {
+                this.bodyIcon = ImageIO.read(inputStream);
+            } else {
+                System.err.println("Can not find image: snakeBody.png");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            InputStream inputStream = getClass().getResourceAsStream("snakeTail.png");
+            if (inputStream != null) {
+                this.tailIcon = ImageIO.read(inputStream);
+            } else {
+                System.err.println("Can not find image: snakeTail.png");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Coordinate> getParts() {
+        return this.parts;
+    }
+
+    public int getPartsCount() {
+        return this.partsCount;
+    }
+
+    public int getEatenFruitsCount() {
+        return this.eatenFruitsCount;
+    }
+
+    public void incPartsCount() {
+        ++this.partsCount;
+    }
+
+    public void incEatenFruitsCount() {
+        ++this.eatenFruitsCount;
+    }
+
+    public BufferedImage getIconForPart(int partInd) {
+        if (partInd == 0) {
+            return this.headIcon;
+        } else if (partInd == this.partsCount - 1) {
+            return this.tailIcon;
+        } else {
+            return this.bodyIcon;
         }
     }
 
