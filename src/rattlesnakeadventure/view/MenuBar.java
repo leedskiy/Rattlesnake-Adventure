@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MenuBar extends JMenuBar {
-    JMenuItem menuRestart;
+    private JMenuItem menuRestart;
     private ArrayList<Window> windows;
 
     public MenuBar(ArrayList<Window> windows) {
@@ -20,18 +20,29 @@ public class MenuBar extends JMenuBar {
         this.menuRestart = new JMenuItem("Restart");
         this.menuRestart.setEnabled(false);
 
-        JMenuItem menuExit = new JMenuItem(new AbstractAction("Exit") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        // JMenuItem menuExit = new JMenuItem(new AbstractAction("Exit") {
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // System.exit(0);
+        // }
+        // });
+        JMenuItem menuExit = new JMenuItem("Exit");
+        menuExit.addActionListener(exit());
 
         menu.add(menuTop10);
         menu.add(menuRestart);
         menu.addSeparator();
         menu.add(menuExit);
         add(menu);
+    }
+
+    private ActionListener exit() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        };
     }
 
     private ActionListener showTop10List() {
