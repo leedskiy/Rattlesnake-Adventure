@@ -10,12 +10,17 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
+import rattlesnakeadventure.model.GameManager;
+
 public class MainWindow extends Window {
 
     private ArrayList<Window> windows;
+    private GameManager gameManager;
 
-    public MainWindow() {
-        windows = new ArrayList<Window>();
+    public MainWindow(GameManager gameManager) {
+        this.windows = new ArrayList<Window>();
+        this.gameManager = gameManager;
+
         MenuBar menuBar = new MenuBar(windows);
         setJMenuBar(menuBar);
 
@@ -37,7 +42,7 @@ public class MainWindow extends Window {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Window window = new GameWindow(windows);
+                Window window = new GameWindow(windows, gameManager);
                 windows.add(window);
             }
         };

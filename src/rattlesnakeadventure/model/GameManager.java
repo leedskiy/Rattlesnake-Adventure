@@ -33,7 +33,7 @@ public class GameManager {
         this.totalCellsCount = rowCellsCount * colCellsCount;
         this.rocksCount = rocksCount;
         snake = new Snake(this.cellSize, this.rowCellsCount, this.colCellsCount);
-        initFruits();
+//        initFruits();
         initRocks();
         this.gameEnd = false;
     }
