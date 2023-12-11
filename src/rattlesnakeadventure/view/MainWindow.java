@@ -16,6 +16,9 @@ public class MainWindow extends Window {
 
     public MainWindow() {
         windows = new ArrayList<Window>();
+        MenuBar menuBar = new MenuBar(windows);
+
+        setJMenuBar(menuBar);
 
         JLabel label = new JLabel();
         label.setBorder(new EmptyBorder(20, 0, 20, 0));
@@ -35,8 +38,8 @@ public class MainWindow extends Window {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                Window window = new GameWindow(MainWindow.this);
-//                windows.add(window);
+                // Window window = new GameWindow(MainWindow.this);
+                // windows.add(window);
             }
         };
     }
