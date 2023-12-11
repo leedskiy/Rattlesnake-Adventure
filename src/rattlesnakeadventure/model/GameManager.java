@@ -39,18 +39,31 @@ public class GameManager {
     }
 
     private void initFruits() {
+        ArrayList<Coordinate> snakeParts = snake.getParts();
         this.fruits = new ArrayList<GameObject>(3);
-        this.fruits.add(new Apple(this.cellSize, this.rowCellsCount, this.colCellsCount));
-        this.fruits.add(new Banana(this.cellSize, this.rowCellsCount, this.colCellsCount));
-        this.fruits.add(new Cherry(this.cellSize, this.rowCellsCount, this.colCellsCount));
-        genNextRandomFruit();
+        this.fruits.add(new Apple(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
+        this.fruits.add(new Banana(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
+        this.fruits.add(new Cherry(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
+
+        switch (this.rand.nextInt(3)) {
+            case (0):
+                this.currFruitInd = 0;
+                break;
+            case (1):
+                this.currFruitInd = 1;
+                break;
+            case (2):
+                this.currFruitInd = 2;
+                break;
+        }
     }
 
     private void initRocks() {
+        ArrayList<Coordinate> snakeParts = snake.getParts();
         this.rocks = new ArrayList<Rock>(this.rocksCount);
 
         for (int i = 0; i < this.rocksCount; ++i) {
-            this.rocks.add(new Rock(this.cellSize, this.rowCellsCount, this.colCellsCount));
+            this.rocks.add(new Rock(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
         }
     }
 
@@ -113,7 +126,8 @@ public class GameManager {
                 break;
         }
 
-        this.fruits.get(this.currFruitInd).genRandCoord(this.cellSize, this.rowCellsCount, this.colCellsCount);
+        this.fruits.get(this.currFruitInd).genRandCoord(this.cellSize, this.rowCellsCount, this.colCellsCount,
+                this.snake.getParts());
     }
 
     public void moveSnake() {
