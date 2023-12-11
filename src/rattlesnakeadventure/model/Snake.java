@@ -116,14 +116,6 @@ public class Snake {
         return this.eatenFruitsCount;
     }
 
-    public void incPartsCount() {
-        ++this.partsCount;
-    }
-
-    public void incEatenFruitsCount() {
-        ++this.eatenFruitsCount;
-    }
-
     public BufferedImage getIconForPart(int partInd) {
         if (partInd == 0) {
             return this.headIcon;
@@ -134,8 +126,16 @@ public class Snake {
         }
     }
 
+    public void incPartsCount() {
+        ++this.partsCount;
+    }
+
+    public void incEatenFruitsCount() {
+        ++this.eatenFruitsCount;
+    }
+
     public void move(int cellSize) {
-        for (int i = partsCount - 1; i > 0; i--) {
+        for (int i = this.partsCount; i > 0; i--) {
             Coordinate currentPart = parts.get(i);
             Coordinate previousPart = parts.get(i - 1);
 
@@ -159,5 +159,9 @@ public class Snake {
                 head.setX(head.getX() - cellSize);
                 break;
         }
+    }
+
+    public void addNewPart() {
+        parts.add(new Coordinate(0, 0));
     }
 }

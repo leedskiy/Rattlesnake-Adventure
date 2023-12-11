@@ -10,19 +10,19 @@ public abstract class GameObject {
     protected BufferedImage icon;
     private Random rand;
 
-    public GameObject(int rowCellsCount, int colCellsCount, int cellSize) {
-        rand = new Random();
-        coord = new Coordinate(rand.nextInt(rowCellsCount) * cellSize,
-                rand.nextInt(colCellsCount) * cellSize);
+    public GameObject(int cellSize, int rowCellsCount, int colCellsCount) {
+        this.rand = new Random();
+        this.coord = new Coordinate(this.rand.nextInt(rowCellsCount) * cellSize,
+                this.rand.nextInt(colCellsCount) * cellSize);
     }
 
-    public void genRandCoord(int rowCellsCount, int colCellsCount, int cellSize) {
-        coord.setX(rand.nextInt(rowCellsCount) * cellSize);
-        coord.setY(rand.nextInt(colCellsCount) * cellSize);
+    public void genRandCoord(int cellSize, int rowCellsCount, int colCellsCount) {
+        coord.setX(this.rand.nextInt(rowCellsCount) * cellSize);
+        coord.setY(this.rand.nextInt(colCellsCount) * cellSize);
     }
 
     public Coordinate getCoord() {
-        return coord;
+        return this.coord;
     }
 
     protected abstract BufferedImage getIcon();

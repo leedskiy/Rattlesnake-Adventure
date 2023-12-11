@@ -7,7 +7,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class Apple extends GameObject {
-    public Apple(int rowCellsCount, int colCellsCount, int cellSize) {
+    public Apple(int cellSize, int rowCellsCount, int colCellsCount) {
         super(rowCellsCount, colCellsCount, cellSize);
 
         try {

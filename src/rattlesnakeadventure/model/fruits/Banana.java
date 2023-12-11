@@ -7,7 +7,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class Banana extends GameObject {
-    public Banana(int rowCellsCount, int colCellsCount, int cellSize) {
+    public Banana(int cellSize, int rowCellsCount, int colCellsCount) {
         super(rowCellsCount, colCellsCount, cellSize);
 
         try {

@@ -7,7 +7,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class Rock extends GameObject {
-    public Rock(int rowCellsCount, int colCellsCount, int cellSize) {
+    public Rock(int cellSize, int rowCellsCount, int colCellsCount) {
         super(rowCellsCount, colCellsCount, cellSize);
 
         try {
