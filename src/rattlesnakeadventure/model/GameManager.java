@@ -19,6 +19,7 @@ public class GameManager {
     private ArrayList<GameObject> fruits;
     private int currFruitInd;
     private ArrayList<Rock> rocks;
+    private Boolean gameEnd;
     private Random rand;
 
     public GameManager() {
@@ -34,6 +35,7 @@ public class GameManager {
         snake = new Snake(this.cellSize, this.rowCellsCount, this.colCellsCount);
         initFruits();
         initRocks();
+        this.gameEnd = false;
     }
 
     private void initFruits() {
@@ -92,6 +94,10 @@ public class GameManager {
         return snake.getEatenFruitsCount();
     }
 
+    public Boolean checkGameEnd() {
+        return gameEnd;
+    }
+
     public void genNextRandomFruit() {
         int randNum = this.rand.nextInt(3);
 
@@ -112,5 +118,49 @@ public class GameManager {
 
     public void moveSnake() {
         this.snake.move(this.cellSize);
+    }
+
+    public Boolean checkEatingFruit() {
+        if (this.snake.getParts().get(0).getX() == this.fruits.get(this.currFruitInd).getCoord().getX()
+                && this.snake.getParts().get(0).getY() == this.fruits.get(this.currFruitInd).getCoord().getY()) {
+            this.snake.incPartsCount();
+            this.snake.incEatenFruitsCount();
+            this.snake.addNewPart();
+            genNextRandomFruit();
+            return true;
+        }
+
+        return false;
+    }
+
+    public Boolean checkCollission() {
+        ArrayList<Coordinate> snakeParts = snake.getParts();
+        Coordinate snakeHead = snakeParts.get(0);
+
+        int width = this.rowCellsCount * this.cellSize;
+        int height = this.colCellsCount * this.cellSize;
+
+        if (snakeHead.getX() < 0 || snakeHead.getY() < 0 ||
+                snakeHead.getX() >= width || snakeHead.getY() >= height) {
+            this.gameEnd = true;
+        }
+
+        for (Rock rock : rocks) {
+            if (snakeHead.getX() == rock.getCoord().getX() &&
+                    snakeHead.getY() == rock.getCoord().getY()) {
+                this.gameEnd = true;
+                return this.gameEnd;
+            }
+        }
+
+        for (int i = this.snake.getPartsCount(); i > 0; i--) {
+            if (snakeHead.getX() == snakeParts.get(i).getX() &&
+                    snakeHead.getY() == snakeParts.get(i).getY()) {
+                this.gameEnd = true;
+                return this.gameEnd;
+            }
+        }
+
+        return this.gameEnd;
     }
 }
