@@ -32,9 +32,10 @@ public class GameManager {
         this.colCellsCount = height / cellSize;
         this.totalCellsCount = rowCellsCount * colCellsCount;
         this.rocksCount = rocksCount;
+        this.rand = new Random();
         snake = new Snake(this.cellSize, this.rowCellsCount, this.colCellsCount);
-//        initFruits();
-        initRocks();
+        initFruits();
+        // initRocks();
         this.gameEnd = false;
     }
 
@@ -42,10 +43,14 @@ public class GameManager {
         ArrayList<Coordinate> snakeParts = snake.getParts();
         this.fruits = new ArrayList<GameObject>(3);
         this.fruits.add(new Apple(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
-        this.fruits.add(new Banana(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
-        this.fruits.add(new Cherry(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
+        this.fruits.add(new Banana(this.cellSize, this.rowCellsCount,
+                this.colCellsCount, snakeParts));
+        this.fruits.add(new Cherry(this.cellSize, this.rowCellsCount,
+                this.colCellsCount, snakeParts));
 
-        switch (this.rand.nextInt(3)) {
+        int randNum = this.rand.nextInt(3);
+
+        switch (randNum) {
             case (0):
                 this.currFruitInd = 0;
                 break;
@@ -96,19 +101,23 @@ public class GameManager {
     }
 
     public ArrayList<Coordinate> getSnakeParts() {
-        return snake.getParts();
+        return this.snake.getParts();
     }
 
     public int getSnakePartsCount() {
-        return snake.getPartsCount();
+        return this.snake.getPartsCount();
     }
 
     public int getSnakeEaFrCount() {
-        return snake.getEatenFruitsCount();
+        return this.snake.getEatenFruitsCount();
     }
 
     public Boolean checkGameEnd() {
-        return gameEnd;
+        return this.gameEnd;
+    }
+
+    public void setGameEnd(Boolean gameEnd) {
+        this.gameEnd = gameEnd;
     }
 
     public void genNextRandomFruit() {
@@ -126,8 +135,8 @@ public class GameManager {
                 break;
         }
 
-        this.fruits.get(this.currFruitInd).genRandCoord(this.cellSize, this.rowCellsCount, this.colCellsCount,
-                this.snake.getParts());
+        this.fruits.get(this.currFruitInd).genRandCoord(this.cellSize, this.rowCellsCount,
+                this.colCellsCount, this.snake.getParts());
     }
 
     public void moveSnake() {

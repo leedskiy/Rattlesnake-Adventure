@@ -38,5 +38,5 @@ public abstract class GameObject {
         return this.coord;
     }
 
-    protected abstract BufferedImage getIcon();
+    public abstract BufferedImage getIcon();
 }

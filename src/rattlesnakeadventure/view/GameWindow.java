@@ -7,10 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.TreeUI;
 
 import rattlesnakeadventure.model.GameManager;
 
@@ -19,6 +22,7 @@ public class GameWindow extends Window {
     private Timer timer;
     private int elapsedTimeInSeconds;
     private JLabel elapsedTimeLabel;
+    private JPanel gamePanel;
     private ArrayList<Window> windows;
     private GameManager gameManager;
 
@@ -26,11 +30,14 @@ public class GameWindow extends Window {
         setTitle("Rattlesnake Adventure / game");
         this.windows = windows;
         this.gameManager = gameManager;
+        this.gameManager.setGameEnd(false);
 
         // menuBar
         this.menuBar = new MenuBar(windows);
         setJMenuBar(this.menuBar);
-        handleRestart();
+        JMenuItem res = this.menuBar.getMenuRestart();
+        res.setEnabled(true);
+        res.addActionListener(e -> handleRestart());
 
         // topPanel
         JPanel topPanel = new JPanel();
@@ -40,18 +47,16 @@ public class GameWindow extends Window {
         initTimer();
 
         // gamePanel
-        JPanel gamePanel = new GamePanel(gameManager);
+        this.gamePanel = new GamePanel(gameManager);
 
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(topPanel, BorderLayout.NORTH);
         getContentPane().add(gamePanel, BorderLayout.CENTER);
 
         // window size
-        int panelWidth = gameManager.getRowCellsCount() * gameManager.getCellSize();
-        int panelHeight = gameManager.getColCellsCount() * gameManager.getCellSize();
-        int windowWidth = panelWidth + getInsets().left + getInsets().right;
-        int windowHeight = panelHeight + topPanel.getPreferredSize().height + getInsets().top + getInsets().bottom;
-        setPreferredSize(new Dimension(windowWidth, windowHeight));
+        int windowWidth = getContentPane().getPreferredSize().width + getInsets().left + getInsets().right;
+        int windowHeight = getContentPane().getPreferredSize().height + topPanel.getPreferredSize().height +
+                getInsets().top + getInsets().bottom;
 
         // window placement
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -65,16 +70,13 @@ public class GameWindow extends Window {
     }
 
     private void handleRestart() {
-        JMenuItem res = this.menuBar.getMenuRestart();
-
-        res.setEnabled(true);
-
-        res.addActionListener(e -> {
-            Window newWindow = new GameWindow(this.windows, this.gameManager);
-            newWindow.setVisible(true);
-            this.dispose();
-            windows.remove(this);
-        });
+        this.gameManager.genNextRandomFruit();
+        this.timer.stop();
+        this.gameManager.setGameEnd(true);
+        Window newWindow = new GameWindow(this.windows, this.gameManager);
+        newWindow.setVisible(true);
+        this.dispose();
+        windows.remove(this);
     }
 
     private void initTimer() {
@@ -93,6 +95,8 @@ public class GameWindow extends Window {
 
     @Override
     protected void doOnExit() {
+        this.gameManager.setGameEnd(true);
+        this.timer.stop();
         super.doOnExit();
         this.windows.remove(this);
     }

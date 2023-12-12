@@ -12,8 +12,9 @@ import javax.swing.border.EmptyBorder;
 
 import rattlesnakeadventure.model.GameManager;
 
-public class MainWindow extends Window {
+import rattlesnakeadventure.model.GameManager;
 
+public class MainWindow extends Window {
     private ArrayList<Window> windows;
     private GameManager gameManager;
 
@@ -56,5 +57,10 @@ public class MainWindow extends Window {
 
     public ArrayList<Window> getAllWindows() {
         return windows;
+    }
+
+    @Override
+    protected void doOnExit() {
+        super.doOnExit();
     }
 }

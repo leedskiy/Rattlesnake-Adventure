@@ -71,33 +71,36 @@ public class Snake {
 
     private void setIcons() {
         try {
-            InputStream inputStream = getClass().getResourceAsStream("snakeHead.png");
+            String filePath = "/rattlesnakeadventure/img/snakeHead.png";
+            InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.headIcon = ImageIO.read(inputStream);
             } else {
-                System.err.println("Can not find image: snakeHead.png");
+                System.err.println("Can not find image: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            InputStream inputStream = getClass().getResourceAsStream("snakeBody.png");
+            String filePath = "/rattlesnakeadventure/img/snakeBody.png";
+            InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.bodyIcon = ImageIO.read(inputStream);
             } else {
-                System.err.println("Can not find image: snakeBody.png");
+                System.err.println("Can not find image: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            InputStream inputStream = getClass().getResourceAsStream("snakeTail.png");
+            String filePath = "/rattlesnakeadventure/img/snakeTail.png";
+            InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.tailIcon = ImageIO.read(inputStream);
             } else {
-                System.err.println("Can not find image: snakeTail.png");
+                System.err.println("Can not find image: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();

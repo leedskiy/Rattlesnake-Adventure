@@ -14,11 +14,12 @@ public class Rock extends GameObject {
         super(rowCellsCount, colCellsCount, cellSize, snakeParts);
 
         try {
-            InputStream inputStream = getClass().getResourceAsStream("rock.png");
+            String filePath = "/rattlesnakeadventure/img/rock.png";
+            InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.icon = ImageIO.read(inputStream);
             } else {
-                System.err.println("Can not find image: rock.png");
+                System.err.println("Can not find image: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();

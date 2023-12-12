@@ -14,11 +14,12 @@ public class Apple extends GameObject {
         super(rowCellsCount, colCellsCount, cellSize, snakeParts);
 
         try {
-            InputStream inputStream = getClass().getResourceAsStream("apple.png");
+            String filePath = "/rattlesnakeadventure/img/apple.png";
+            InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.icon = ImageIO.read(inputStream);
             } else {
-                System.err.println("Can not find image: apple.png");
+                System.err.println("Can not find image: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();

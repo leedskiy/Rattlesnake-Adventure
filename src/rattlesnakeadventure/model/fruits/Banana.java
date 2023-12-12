@@ -14,11 +14,12 @@ public class Banana extends GameObject {
         super(rowCellsCount, colCellsCount, cellSize, snakeParts);
 
         try {
-            InputStream inputStream = getClass().getResourceAsStream("banana.png");
+            String filePath = "/rattlesnakeadventure/img/banana.png";
+            InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.icon = ImageIO.read(inputStream);
             } else {
-                System.err.println("Can not find image: banana.png");
+                System.err.println("Can not find image: " + filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();

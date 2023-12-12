@@ -20,12 +20,6 @@ public class MenuBar extends JMenuBar {
         this.menuRestart = new JMenuItem("Restart");
         this.menuRestart.setEnabled(false);
 
-        // JMenuItem menuExit = new JMenuItem(new AbstractAction("Exit") {
-        // @Override
-        // public void actionPerformed(ActionEvent e) {
-        // System.exit(0);
-        // }
-        // });
         JMenuItem menuExit = new JMenuItem("Exit");
         menuExit.addActionListener(exit());
 
