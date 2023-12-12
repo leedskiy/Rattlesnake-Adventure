@@ -18,11 +18,11 @@ public class Snake {
     protected BufferedImage bodyIcon;
     protected BufferedImage tailIcon;
 
-    public Snake(int cellSize, int rowCellsCount, int colCellsCount) {
+    public Snake(int cellSize, int width, int height) {
         this.partsCount = 2;
         this.eatenFruitsCount = 0;
         setRandomDirection();
-        initParts(cellSize, rowCellsCount, colCellsCount);
+        initParts(cellSize, width, height);
         setIcons();
     }
 
@@ -46,11 +46,11 @@ public class Snake {
         }
     }
 
-    private void initParts(int cellSize, int rowCellsCount, int colCellsCount) {
-        this.parts = new ArrayList<Coordinate>(this.partsCount);
+    private void initParts(int cellSize, int width, int height) {
+        this.parts = new ArrayList<Coordinate>();
 
-        int initialX = (rowCellsCount / 2) * cellSize;
-        int initialY = (colCellsCount / 2) * cellSize;
+        int initialX = (width / 2) * cellSize;
+        int initialY = (height / 2) * cellSize;
 
         parts.add(new Coordinate(initialX, initialY));
         switch (this.direction) {
@@ -67,6 +67,8 @@ public class Snake {
                 this.parts.add(new Coordinate(initialX + cellSize, initialY));
                 break;
         }
+
+        parts.add(new Coordinate(0, 0));
     }
 
     private void setIcons() {

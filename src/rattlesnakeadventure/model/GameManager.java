@@ -209,7 +209,7 @@ public class GameManager {
             }
         }
 
-        for (int i = this.snake.getPartsCount(); i > 0; i--) {
+        for (int i = this.snake.getPartsCount() - 1; i > 0; i--) {
             if (snakeHead.getX() == snakeParts.get(i).getX() &&
                     snakeHead.getY() == snakeParts.get(i).getY()) {
                 this.gameEnd = true;

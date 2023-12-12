@@ -79,7 +79,9 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!gameManager.checkGameEnd()) {
-
+            gameManager.moveSnake();
+            gameManager.checkEatingFruit();
+            gameManager.checkCollission();
         } else {
             timer.stop();
         }
