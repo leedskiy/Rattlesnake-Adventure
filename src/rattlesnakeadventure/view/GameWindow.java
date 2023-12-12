@@ -18,6 +18,10 @@ import javax.swing.plaf.TreeUI;
 import rattlesnakeadventure.model.GameManager;
 
 public class GameWindow extends Window {
+    private int cellSize;
+    private int width;
+    private int height;
+    private int rocksCount;
     private MenuBar menuBar;
     private Timer timer;
     private int elapsedTimeInSeconds;
@@ -26,10 +30,14 @@ public class GameWindow extends Window {
     private ArrayList<Window> windows;
     private GameManager gameManager;
 
-    public GameWindow(ArrayList<Window> windows, GameManager gameManager) {
+    public GameWindow(ArrayList<Window> windows, int cellSize, int width, int height, int rocksCount) {
         setTitle("Rattlesnake Adventure / game");
         this.windows = windows;
-        this.gameManager = gameManager;
+        this.cellSize = cellSize;
+        this.width = width;
+        this.height = height;
+        this.rocksCount = rocksCount;
+        this.gameManager = new GameManager(cellSize, width, height, rocksCount);
         this.gameManager.setGameEnd(false);
 
         // menuBar
@@ -54,9 +62,10 @@ public class GameWindow extends Window {
         getContentPane().add(gamePanel, BorderLayout.CENTER);
 
         // window size
-        int windowWidth = getContentPane().getPreferredSize().width + getInsets().left + getInsets().right;
+        int windowWidth = getContentPane().getPreferredSize().width + getInsets().left + getInsets().right + 150;
         int windowHeight = getContentPane().getPreferredSize().height + topPanel.getPreferredSize().height +
-                getInsets().top + getInsets().bottom;
+                getInsets().top + getInsets().bottom + 150;
+        setPreferredSize(new Dimension(windowWidth, windowHeight));
 
         // window placement
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -70,10 +79,9 @@ public class GameWindow extends Window {
     }
 
     private void handleRestart() {
-        this.gameManager.genNextRandomFruit();
         this.timer.stop();
         this.gameManager.setGameEnd(true);
-        Window newWindow = new GameWindow(this.windows, this.gameManager);
+        Window newWindow = new GameWindow(this.windows, this.cellSize, this.width, this.height, this.rocksCount);
         newWindow.setVisible(true);
         this.dispose();
         windows.remove(this);

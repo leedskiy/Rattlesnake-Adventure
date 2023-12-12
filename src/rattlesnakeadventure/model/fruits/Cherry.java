@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 import rattlesnakeadventure.model.Coordinate;
 
 public class Cherry extends GameObject {
-    public Cherry(int cellSize, int rowCellsCount, int colCellsCount, ArrayList<Coordinate> snakeParts) {
-        super(rowCellsCount, colCellsCount, cellSize, snakeParts);
+    public Cherry(int cellSize, int width, int height, ArrayList<Coordinate> snakeParts) {
+        super(cellSize, width, height, snakeParts);
 
         try {
             String filePath = "/rattlesnakeadventure/img/cherry.png";

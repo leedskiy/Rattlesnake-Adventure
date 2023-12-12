@@ -1,5 +1,6 @@
 package rattlesnakeadventure.model;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +16,8 @@ public class GameManager {
     private int colCellsCount;
     private int totalCellsCount;
     private int rocksCount;
+    private int width;
+    private int height;
     private Snake snake;
     private ArrayList<GameObject> fruits;
     private int currFruitInd;
@@ -28,25 +31,49 @@ public class GameManager {
 
     public GameManager(int cellSize, int width, int height, int rocksCount) {
         this.cellSize = cellSize;
+        this.width = width;
+        this.height = height;
         this.rowCellsCount = width / cellSize;
         this.colCellsCount = height / cellSize;
         this.totalCellsCount = rowCellsCount * colCellsCount;
         this.rocksCount = rocksCount;
         this.rand = new Random();
         snake = new Snake(this.cellSize, this.rowCellsCount, this.colCellsCount);
+        initRocks();
         initFruits();
-        // initRocks();
         this.gameEnd = false;
+    }
+
+    private void initRocks() {
+        ArrayList<Coordinate> snakeParts = snake.getParts();
+        this.rocks = new ArrayList<Rock>(this.rocksCount);
+        Rock newRock;
+
+        for (int i = 0; i < this.rocksCount; ++i) {
+            do {
+                newRock = new Rock(this.cellSize, this.width, this.height, snakeParts);
+            } while (checkRockOverlap(newRock.getCoord()));
+            this.rocks.add(newRock);
+        }
     }
 
     private void initFruits() {
         ArrayList<Coordinate> snakeParts = snake.getParts();
         this.fruits = new ArrayList<GameObject>(3);
-        this.fruits.add(new Apple(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
-        this.fruits.add(new Banana(this.cellSize, this.rowCellsCount,
-                this.colCellsCount, snakeParts));
-        this.fruits.add(new Cherry(this.cellSize, this.rowCellsCount,
-                this.colCellsCount, snakeParts));
+        GameObject fruit;
+
+        do {
+            fruit = new Apple(this.cellSize, this.width, this.height, snakeParts);
+        } while (checkRockOverlap(fruit.getCoord()));
+        fruits.add(fruit);
+        do {
+            fruit = new Banana(this.cellSize, this.width, this.height, snakeParts);
+        } while (checkRockOverlap(fruit.getCoord()));
+        fruits.add(fruit);
+        do {
+            fruit = new Cherry(this.cellSize, this.width, this.height, snakeParts);
+        } while (checkRockOverlap(fruit.getCoord()));
+        fruits.add(fruit);
 
         int randNum = this.rand.nextInt(3);
 
@@ -63,13 +90,13 @@ public class GameManager {
         }
     }
 
-    private void initRocks() {
-        ArrayList<Coordinate> snakeParts = snake.getParts();
-        this.rocks = new ArrayList<Rock>(this.rocksCount);
-
-        for (int i = 0; i < this.rocksCount; ++i) {
-            this.rocks.add(new Rock(this.cellSize, this.rowCellsCount, this.colCellsCount, snakeParts));
+    private Boolean checkRockOverlap(Coordinate gameObjCoord) {
+        for (Rock rock : this.rocks) {
+            if (gameObjCoord.getX() == rock.getCoord().getX() && gameObjCoord.getY() == rock.getCoord().getY()) {
+                return true;
+            }
         }
+        return false;
     }
 
     public int getCellSize() {
@@ -112,6 +139,10 @@ public class GameManager {
         return this.snake.getEatenFruitsCount();
     }
 
+    public BufferedImage getSnakeIconPart(int partInd) {
+        return snake.getIconForPart(partInd);
+    }
+
     public Boolean checkGameEnd() {
         return this.gameEnd;
     }
@@ -135,8 +166,10 @@ public class GameManager {
                 break;
         }
 
-        this.fruits.get(this.currFruitInd).genRandCoord(this.cellSize, this.rowCellsCount,
-                this.colCellsCount, this.snake.getParts());
+        do {
+            this.fruits.get(this.currFruitInd).genRandCoord(this.cellSize, this.width,
+                    this.height, this.snake.getParts());
+        } while (checkRockOverlap(this.fruits.get(this.currFruitInd).getCoord()));
     }
 
     public void moveSnake() {

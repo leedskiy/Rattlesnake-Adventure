@@ -71,7 +71,7 @@ public class Snake {
 
     private void setIcons() {
         try {
-            String filePath = "/rattlesnakeadventure/img/snakeHead.png";
+            String filePath = "/rattlesnakeadventure/img/snakeHeadTemp.png";
             InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.headIcon = ImageIO.read(inputStream);
@@ -83,7 +83,7 @@ public class Snake {
         }
 
         try {
-            String filePath = "/rattlesnakeadventure/img/snakeBody.png";
+            String filePath = "/rattlesnakeadventure/img/snakeBodyTemp.png";
             InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.bodyIcon = ImageIO.read(inputStream);
@@ -95,7 +95,7 @@ public class Snake {
         }
 
         try {
-            String filePath = "/rattlesnakeadventure/img/snakeTail.png";
+            String filePath = "/rattlesnakeadventure/img/snakeTailTemp.png";
             InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.tailIcon = ImageIO.read(inputStream);

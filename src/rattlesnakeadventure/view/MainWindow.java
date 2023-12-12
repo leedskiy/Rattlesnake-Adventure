@@ -17,10 +17,17 @@ import rattlesnakeadventure.model.GameManager;
 public class MainWindow extends Window {
     private ArrayList<Window> windows;
     private GameManager gameManager;
+    private int cellSize;
+    private int width;
+    private int height;
+    private int rocksCount;
 
-    public MainWindow(GameManager gameManager) {
+    public MainWindow(int cellSize, int width, int height, int rocksCount) {
         this.windows = new ArrayList<Window>();
-        this.gameManager = gameManager;
+        this.cellSize = cellSize;
+        this.width = width;
+        this.height = height;
+        this.rocksCount = rocksCount;
 
         MenuBar menuBar = new MenuBar(windows);
         setJMenuBar(menuBar);
@@ -43,7 +50,7 @@ public class MainWindow extends Window {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Window window = new GameWindow(windows, gameManager);
+                Window window = new GameWindow(windows, cellSize, width, height, rocksCount);
                 windows.add(window);
             }
         };

@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 import rattlesnakeadventure.model.Coordinate;
 
 public class Apple extends GameObject {
-    public Apple(int cellSize, int rowCellsCount, int colCellsCount, ArrayList<Coordinate> snakeParts) {
-        super(rowCellsCount, colCellsCount, cellSize, snakeParts);
+    public Apple(int cellSize, int width, int height, ArrayList<Coordinate> snakeParts) {
+        super(cellSize, width, height, snakeParts);
 
         try {
             String filePath = "/rattlesnakeadventure/img/apple.png";

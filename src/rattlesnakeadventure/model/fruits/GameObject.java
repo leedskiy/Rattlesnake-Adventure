@@ -11,16 +11,20 @@ public abstract class GameObject {
     protected BufferedImage icon;
     private Random rand;
 
-    public GameObject(int cellSize, int rowCellsCount, int colCellsCount, ArrayList<Coordinate> snakeParts) {
+    public GameObject(int cellSize, int width, int height, ArrayList<Coordinate> snakeParts) {
         this.rand = new Random();
         this.coord = new Coordinate(0, 0);
-        genRandCoord(cellSize, rowCellsCount, colCellsCount, snakeParts);
+        genRandCoord(cellSize, width, height, snakeParts);
     }
 
-    public void genRandCoord(int cellSize, int rowCellsCount, int colCellsCount, ArrayList<Coordinate> snakeParts) {
+    public void genRandCoord(int cellSize, int width, int height, ArrayList<Coordinate> snakeParts) {
         do {
-            this.coord.setX(this.rand.nextInt(rowCellsCount) * cellSize);
-            this.coord.setY(this.rand.nextInt(colCellsCount) * cellSize);
+            int x = this.rand.nextInt(width / cellSize) * cellSize;
+            System.out.println("x " + x);
+            this.coord.setX(x);
+            int y = this.rand.nextInt(height / cellSize) * cellSize;
+            System.out.println("y " + y);
+            this.coord.setY(y);
         } while (checkSnakeOverlap(snakeParts));
     }
 
