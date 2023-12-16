@@ -14,7 +14,7 @@ public class Apple extends GameObject {
         super(cellSize, width, height, snakeParts, areaSize);
 
         try {
-            String filePath = "/rattlesnakeadventure/img/apple.png";
+            String filePath = "/rattlesnakeadventure/img/obj/apple.png";
             InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.icon = ImageIO.read(inputStream);

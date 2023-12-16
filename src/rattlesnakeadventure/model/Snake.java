@@ -14,13 +14,12 @@ public class Snake {
     private int eatenFruitsCount;
     private char direction;
     private Random rand;
-    private BufferedImage headIcon;
-    private BufferedImage bodyIcon;
-    private BufferedImage tailIcon;
+    private ArrayList<ArrayList<BufferedImage>> icons; // 3x4
 
     public Snake(int cellSize, int width, int height) {
         this.partsCount = 2;
         this.eatenFruitsCount = 0;
+        this.icons = new ArrayList<ArrayList<BufferedImage>>();
         initRandomDirection();
         initParts(cellSize, width, height);
         initIcons();
@@ -72,40 +71,46 @@ public class Snake {
     }
 
     private void initIcons() {
-        try {
-            String filePath = "/rattlesnakeadventure/img/snakeHeadTemp.png";
-            InputStream inputStream = getClass().getResourceAsStream(filePath);
-            if (inputStream != null) {
-                this.headIcon = ImageIO.read(inputStream);
-            } else {
-                System.err.println("Can not find image: " + filePath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        initPartIcons("/rattlesnakeadventure/img/snake/snakeHeadUp.png",
+                "/rattlesnakeadventure/img/snake/snakeHeadRight.png",
+                "/rattlesnakeadventure/img/snake/snakeHeadDown.png",
+                "/rattlesnakeadventure/img/snake/snakeHeadLeft.png");
 
-        try {
-            String filePath = "/rattlesnakeadventure/img/snakeBodyTemp.png";
-            InputStream inputStream = getClass().getResourceAsStream(filePath);
-            if (inputStream != null) {
-                this.bodyIcon = ImageIO.read(inputStream);
-            } else {
-                System.err.println("Can not find image: " + filePath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        initPartIcons("/rattlesnakeadventure/img/snake/snakeBodyUp.png",
+                "/rattlesnakeadventure/img/snake/snakeBodyRight.png",
+                "/rattlesnakeadventure/img/snake/snakeBodyDown.png",
+                "/rattlesnakeadventure/img/snake/snakeBodyLeft.png");
 
+        initPartIcons("/rattlesnakeadventure/img/snake/snakeTailUp.png",
+                "/rattlesnakeadventure/img/snake/snakeTailRight.png",
+                "/rattlesnakeadventure/img/snake/snakeTailDown.png",
+                "/rattlesnakeadventure/img/snake/snakeTailLeft.png");
+    }
+
+    private void initPartIcons(String upPath, String rightPath, String downPath, String leftPath) {
+        ArrayList<BufferedImage> partIcons = new ArrayList<>();
+
+        partIcons.add(loadIcon(upPath));
+        partIcons.add(loadIcon(rightPath));
+        partIcons.add(loadIcon(downPath));
+        partIcons.add(loadIcon(leftPath));
+
+        this.icons.add(partIcons);
+    }
+
+    private BufferedImage loadIcon(String filePath) {
         try {
-            String filePath = "/rattlesnakeadventure/img/snakeTailTemp.png";
             InputStream inputStream = getClass().getResourceAsStream(filePath);
+
             if (inputStream != null) {
-                this.tailIcon = ImageIO.read(inputStream);
+                return ImageIO.read(inputStream);
             } else {
                 System.err.println("Can not find image: " + filePath);
+                return null;
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -123,12 +128,41 @@ public class Snake {
 
     public BufferedImage getIconForPart(int partInd) {
         if (partInd == 0) {
-            return this.headIcon;
-        } else if (partInd == this.partsCount - 1) {
-            return this.tailIcon;
+            switch (direction) {
+                case 'U':
+                    return icons.get(0).get(0);
+                case 'R':
+                    return icons.get(0).get(1);
+                case 'D':
+                    return icons.get(0).get(2);
+                case 'L':
+                    return icons.get(0).get(3);
+            }
+        } else if (partInd == partsCount - 1) {
+            switch (direction) {
+                case 'U':
+                    return icons.get(2).get(0);
+                case 'R':
+                    return icons.get(2).get(1);
+                case 'D':
+                    return icons.get(2).get(2);
+                case 'L':
+                    return icons.get(2).get(3);
+            }
         } else {
-            return this.bodyIcon;
+            switch (direction) {
+                case 'U':
+                    return icons.get(1).get(0);
+                case 'R':
+                    return icons.get(1).get(1);
+                case 'D':
+                    return icons.get(1).get(2);
+                case 'L':
+                    return icons.get(1).get(3);
+            }
         }
+
+        return null;
     }
 
     public void incPartsCount() {
