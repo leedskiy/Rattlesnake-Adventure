@@ -4,20 +4,17 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-import rattlesnakeadventure.model.fruits.GameObject;
-import rattlesnakeadventure.model.fruits.Apple;
-import rattlesnakeadventure.model.fruits.Banana;
-import rattlesnakeadventure.model.fruits.Cherry;
-import rattlesnakeadventure.model.fruits.Rock;
+import rattlesnakeadventure.model.object.Apple;
+import rattlesnakeadventure.model.object.Banana;
+import rattlesnakeadventure.model.object.Cherry;
+import rattlesnakeadventure.model.object.GameObject;
+import rattlesnakeadventure.model.object.Rock;
 
 public class GameManager {
     private int cellSize;
-    private int rowCellsCount;
-    private int colCellsCount;
-    private int totalCellsCount;
-    private int rocksCount;
     private int width;
     private int height;
+    private int rocksCount;
     private Snake snake;
     private ArrayList<GameObject> fruits;
     private int currFruitInd;
@@ -33,12 +30,9 @@ public class GameManager {
         this.cellSize = cellSize;
         this.width = width;
         this.height = height;
-        this.rowCellsCount = width / cellSize;
-        this.colCellsCount = height / cellSize;
-        this.totalCellsCount = rowCellsCount * colCellsCount;
         this.rocksCount = rocksCount;
         this.rand = new Random();
-        snake = new Snake(this.cellSize, this.rowCellsCount, this.colCellsCount);
+        snake = new Snake(this.cellSize, this.width, this.height);
         initRocks();
         initFruits();
         this.gameEnd = false;
@@ -51,7 +45,7 @@ public class GameManager {
 
         for (int i = 0; i < this.rocksCount; ++i) {
             do {
-                newRock = new Rock(this.cellSize, this.width, this.height, snakeParts);
+                newRock = new Rock(this.cellSize, this.width, this.height, snakeParts, 3);
             } while (checkRockOverlap(newRock.getCoord()));
             this.rocks.add(newRock);
         }
@@ -63,15 +57,15 @@ public class GameManager {
         GameObject fruit;
 
         do {
-            fruit = new Apple(this.cellSize, this.width, this.height, snakeParts);
+            fruit = new Apple(this.cellSize, this.width, this.height, snakeParts, 3);
         } while (checkRockOverlap(fruit.getCoord()));
         fruits.add(fruit);
         do {
-            fruit = new Banana(this.cellSize, this.width, this.height, snakeParts);
+            fruit = new Banana(this.cellSize, this.width, this.height, snakeParts, 3);
         } while (checkRockOverlap(fruit.getCoord()));
         fruits.add(fruit);
         do {
-            fruit = new Cherry(this.cellSize, this.width, this.height, snakeParts);
+            fruit = new Cherry(this.cellSize, this.width, this.height, snakeParts, 3);
         } while (checkRockOverlap(fruit.getCoord()));
         fruits.add(fruit);
 
@@ -103,16 +97,12 @@ public class GameManager {
         return this.cellSize;
     }
 
-    public int getRowCellsCount() {
-        return this.rowCellsCount;
+    public int getWidth() {
+        return this.width;
     }
 
-    public int getColCellsCount() {
-        return this.colCellsCount;
-    }
-
-    public int getTotalCellsCount() {
-        return this.totalCellsCount;
+    public int getHeight() {
+        return this.height;
     }
 
     public int getRocksCount() {
@@ -140,7 +130,7 @@ public class GameManager {
     }
 
     public BufferedImage getSnakeIconPart(int partInd) {
-        return snake.getIconForPart(partInd);
+        return this.snake.getIconForPart(partInd);
     }
 
     public Boolean checkGameEnd() {
@@ -168,7 +158,7 @@ public class GameManager {
 
         do {
             this.fruits.get(this.currFruitInd).genRandCoord(this.cellSize, this.width,
-                    this.height, this.snake.getParts());
+                    this.height, this.snake.getParts(), 3);
         } while (checkRockOverlap(this.fruits.get(this.currFruitInd).getCoord()));
     }
 
@@ -193,11 +183,8 @@ public class GameManager {
         ArrayList<Coordinate> snakeParts = snake.getParts();
         Coordinate snakeHead = snakeParts.get(0);
 
-        int width = this.rowCellsCount * this.cellSize;
-        int height = this.colCellsCount * this.cellSize;
-
         if (snakeHead.getX() < 0 || snakeHead.getY() < 0 ||
-                snakeHead.getX() >= width || snakeHead.getY() >= height) {
+                snakeHead.getX() >= this.width || snakeHead.getY() >= this.height) {
             this.gameEnd = true;
         }
 

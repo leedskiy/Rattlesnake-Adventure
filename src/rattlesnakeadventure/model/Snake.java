@@ -49,8 +49,8 @@ public class Snake {
     private void initParts(int cellSize, int width, int height) {
         this.parts = new ArrayList<Coordinate>();
 
-        int initialX = (width / 2) * cellSize;
-        int initialY = (height / 2) * cellSize;
+        int initialX = (width / 2) - ((width / 2) % cellSize);
+        int initialY = (height / 2) - ((height / 2) % cellSize);
 
         parts.add(new Coordinate(initialX, initialY));
         switch (this.direction) {
@@ -140,7 +140,7 @@ public class Snake {
     }
 
     public void move(int cellSize) {
-        for (int i = this.partsCount; i > 0; i--) {
+        for (int i = this.partsCount - 1; i > 0; i--) {
             Coordinate currentPart = parts.get(i);
             Coordinate previousPart = parts.get(i - 1);
 

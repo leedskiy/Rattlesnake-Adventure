@@ -1,4 +1,4 @@
-package rattlesnakeadventure.model.fruits;
+package rattlesnakeadventure.model.object;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -9,12 +9,12 @@ import javax.imageio.ImageIO;
 
 import rattlesnakeadventure.model.Coordinate;
 
-public class Banana extends GameObject {
-    public Banana(int cellSize, int width, int height, ArrayList<Coordinate> snakeParts) {
-        super(cellSize, width, height, snakeParts);
+public class Rock extends GameObject {
+    public Rock(int cellSize, int width, int height, ArrayList<Coordinate> snakeParts, int areaSize) {
+        super(cellSize, width, height, snakeParts, areaSize);
 
         try {
-            String filePath = "/rattlesnakeadventure/img/banana.png";
+            String filePath = "/rattlesnakeadventure/img/rock.png";
             InputStream inputStream = getClass().getResourceAsStream(filePath);
             if (inputStream != null) {
                 this.icon = ImageIO.read(inputStream);

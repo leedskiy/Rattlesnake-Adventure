@@ -5,8 +5,8 @@ import javax.swing.*;
 import rattlesnakeadventure.model.Coordinate;
 import rattlesnakeadventure.model.GameManager;
 import rattlesnakeadventure.model.Snake;
-import rattlesnakeadventure.model.fruits.GameObject;
-import rattlesnakeadventure.model.fruits.Rock;
+import rattlesnakeadventure.model.object.GameObject;
+import rattlesnakeadventure.model.object.Rock;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,10 +25,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public GamePanel(GameManager gameManager) {
         this.gameManager = gameManager;
-
-        int cellSize = gameManager.getCellSize();
-        this.setPreferredSize(new Dimension(gameManager.getRowCellsCount() * cellSize,
-                gameManager.getColCellsCount() * cellSize));
+        this.delay = 177;
+        this.setPreferredSize(new Dimension(gameManager.getWidth(),
+                gameManager.getHeight()));
         this.setFocusable(true);
         Color color = Color.decode("#A5A265");
         this.setBackground(color);
@@ -52,6 +51,17 @@ public class GamePanel extends JPanel implements ActionListener {
             GameObject currFruit = gameManager.getCurrFruit();
             BufferedImage currFruitIcon = currFruit.getIcon();
 
+            // borders
+            g.setColor(Color.BLACK);
+            for (int row = 0; row < gameManager.getHeight() / cellSize; row++) {
+                for (int col = 0; col < gameManager.getWidth() / cellSize; col++) {
+                    int x = col * cellSize;
+                    int y = row * cellSize;
+
+                    g.drawRect(x, y, cellSize, cellSize);
+                }
+            }
+
             // fruit
             g.drawImage(currFruitIcon, currFruit.getCoord().getX(), currFruit.getCoord().getY(),
                     cellSize, cellSize, null);
@@ -66,7 +76,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
             // snake
             ArrayList<Coordinate> snakeParts = gameManager.getSnakeParts();
-
             for (int i = 0; i < gameManager.getSnakePartsCount(); i++) {
                 g.drawImage(gameManager.getSnakeIconPart(i), snakeParts.get(i).getX(),
                         snakeParts.get(i).getY(), cellSize, cellSize, null);
@@ -79,7 +88,7 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!gameManager.checkGameEnd()) {
-            gameManager.moveSnake();
+             gameManager.moveSnake();
             gameManager.checkEatingFruit();
             gameManager.checkCollission();
         } else {

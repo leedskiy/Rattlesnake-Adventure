@@ -62,9 +62,9 @@ public class GameWindow extends Window {
         getContentPane().add(gamePanel, BorderLayout.CENTER);
 
         // window size
-        int windowWidth = getContentPane().getPreferredSize().width + getInsets().left + getInsets().right + 150;
+        int windowWidth = getContentPane().getPreferredSize().width + getInsets().left + getInsets().right + 15;
         int windowHeight = getContentPane().getPreferredSize().height + topPanel.getPreferredSize().height +
-                getInsets().top + getInsets().bottom + 150;
+                getInsets().top + getInsets().bottom + 15;
         setPreferredSize(new Dimension(windowWidth, windowHeight));
 
         // window placement
