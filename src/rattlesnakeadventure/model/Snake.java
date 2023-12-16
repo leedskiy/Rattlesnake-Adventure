@@ -14,19 +14,19 @@ public class Snake {
     private int eatenFruitsCount;
     private char direction;
     private Random rand;
-    protected BufferedImage headIcon;
-    protected BufferedImage bodyIcon;
-    protected BufferedImage tailIcon;
+    private BufferedImage headIcon;
+    private BufferedImage bodyIcon;
+    private BufferedImage tailIcon;
 
     public Snake(int cellSize, int width, int height) {
         this.partsCount = 2;
         this.eatenFruitsCount = 0;
-        setRandomDirection();
+        initRandomDirection();
         initParts(cellSize, width, height);
-        setIcons();
+        initIcons();
     }
 
-    private void setRandomDirection() {
+    private void initRandomDirection() {
         this.rand = new Random();
         int randNum = rand.nextInt(4) + 1;
 
@@ -71,7 +71,7 @@ public class Snake {
         parts.add(new Coordinate(0, 0));
     }
 
-    private void setIcons() {
+    private void initIcons() {
         try {
             String filePath = "/rattlesnakeadventure/img/snakeHeadTemp.png";
             InputStream inputStream = getClass().getResourceAsStream(filePath);
@@ -133,6 +133,14 @@ public class Snake {
 
     public void incPartsCount() {
         ++this.partsCount;
+    }
+
+    public char getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(char direction) {
+        this.direction = direction;
     }
 
     public void incEatenFruitsCount() {

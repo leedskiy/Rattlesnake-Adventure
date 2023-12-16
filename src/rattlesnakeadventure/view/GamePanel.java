@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(gameManager.getWidth(),
                 gameManager.getHeight()));
         this.setFocusable(true);
-        Color color = Color.decode("#A5A265");
+        Color color = Color.decode("#000000");
         this.setBackground(color);
         this.addKeyListener(new PanelKeyAdapter());
         start();
@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements ActionListener {
             BufferedImage currFruitIcon = currFruit.getIcon();
 
             // borders
-            g.setColor(Color.BLACK);
+            g.setColor(Color.decode("#262626"));
             for (int row = 0; row < gameManager.getHeight() / cellSize; row++) {
                 for (int col = 0; col < gameManager.getWidth() / cellSize; col++) {
                     int x = col * cellSize;
@@ -88,7 +88,7 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!gameManager.checkGameEnd()) {
-             gameManager.moveSnake();
+            gameManager.moveSnake();
             gameManager.checkEatingFruit();
             gameManager.checkCollission();
         } else {
@@ -100,6 +100,32 @@ public class GamePanel extends JPanel implements ActionListener {
     public class PanelKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                case KeyEvent.VK_UP:
+                    if (gameManager.getSnakeDirection() != 'D') {
+                        gameManager.setSnakeDirection('U');
+                    }
+                    break;
+                case KeyEvent.VK_D:
+                case KeyEvent.VK_RIGHT:
+                    if (gameManager.getSnakeDirection() != 'L') {
+                        gameManager.setSnakeDirection('R');
+                    }
+                    break;
+                case KeyEvent.VK_S:
+                case KeyEvent.VK_DOWN:
+                    if (gameManager.getSnakeDirection() != 'U') {
+                        gameManager.setSnakeDirection('D');
+                    }
+                    break;
+                case KeyEvent.VK_A:
+                case KeyEvent.VK_LEFT:
+                    if (gameManager.getSnakeDirection() != 'R') {
+                        gameManager.setSnakeDirection('L');
+                    }
+                    break;
+            }
         }
     }
 }

@@ -133,6 +133,14 @@ public class GameManager {
         return this.snake.getIconForPart(partInd);
     }
 
+    public char getSnakeDirection() {
+        return this.snake.getDirection();
+    }
+
+    public void setSnakeDirection(char direction) {
+        this.snake.setDirection(direction);
+    }
+
     public Boolean checkGameEnd() {
         return this.gameEnd;
     }
