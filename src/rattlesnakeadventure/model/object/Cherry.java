@@ -25,9 +25,4 @@ public class Cherry extends GameObject {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public BufferedImage getIcon() {
-        return this.icon;
-    }
 }

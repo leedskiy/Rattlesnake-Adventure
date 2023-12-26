@@ -6,7 +6,7 @@ import java.util.Random;
 
 import rattlesnakeadventure.model.Coordinate;
 
-public abstract class GameObject {
+public class GameObject {
     protected Coordinate coord;
     protected BufferedImage icon;
     private Random rand;
@@ -48,5 +48,7 @@ public abstract class GameObject {
         return this.coord;
     }
 
-    public abstract BufferedImage getIcon();
+    public BufferedImage getIcon() {
+        return this.icon;
+    }
 }
