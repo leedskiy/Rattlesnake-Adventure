@@ -26,6 +26,7 @@ public class GameWindow extends Window {
     private Timer timer;
     private int elapsedTimeInSeconds;
     private JLabel elapsedTimeLabel;
+    private JLabel eatenFrCnLabel;
     private JPanel gamePanel;
     private ArrayList<Window> windows;
     private GameManager gameManager;
@@ -49,13 +50,17 @@ public class GameWindow extends Window {
 
         // topPanel
         JPanel topPanel = new JPanel();
+        this.eatenFrCnLabel = new JLabel();
+        this.eatenFrCnLabel.setText("Eaten fruits: 0");
+        this.eatenFrCnLabel.setBorder(new EmptyBorder(0, 0, 0, 20));
         this.elapsedTimeLabel = new JLabel();
         this.elapsedTimeLabel.setText("Elapsed time: 0s");
-        topPanel.add(elapsedTimeLabel);
-        initTimer();
+        topPanel.add(this.eatenFrCnLabel);
+        topPanel.add(this.elapsedTimeLabel);
+        initTimerForTLabel();
 
         // gamePanel
-        this.gamePanel = new GamePanel(gameManager);
+        this.gamePanel = new GamePanel(this.gameManager, this);
 
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(topPanel, BorderLayout.NORTH);
@@ -87,7 +92,11 @@ public class GameWindow extends Window {
         windows.remove(this);
     }
 
-    private void initTimer() {
+    public void updateEatenFrCnLabel() {
+        eatenFrCnLabel.setText("Eaten fruits: " + gameManager.getSnakeEaFrCount());
+    }
+
+    private void initTimerForTLabel() {
         this.elapsedTimeInSeconds = 0;
 
         this.timer = new Timer(1000, new ActionListener() {

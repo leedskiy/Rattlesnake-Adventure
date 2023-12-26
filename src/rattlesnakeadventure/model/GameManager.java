@@ -187,15 +187,17 @@ public class GameManager {
         return false;
     }
 
-    public Boolean checkCollission() {
+    public Boolean checkCollision() {
         ArrayList<Coordinate> snakeParts = snake.getParts();
         Coordinate snakeHead = snakeParts.get(0);
 
+        // board collision
         if (snakeHead.getX() < 0 || snakeHead.getY() < 0 ||
                 snakeHead.getX() >= this.width || snakeHead.getY() >= this.height) {
             this.gameEnd = true;
         }
 
+        // rock collision
         for (Rock rock : rocks) {
             if (snakeHead.getX() == rock.getCoord().getX() &&
                     snakeHead.getY() == rock.getCoord().getY()) {
@@ -204,6 +206,7 @@ public class GameManager {
             }
         }
 
+        // snake collision
         for (int i = this.snake.getPartsCount() - 1; i > 0; i--) {
             if (snakeHead.getX() == snakeParts.get(i).getX() &&
                     snakeHead.getY() == snakeParts.get(i).getY()) {

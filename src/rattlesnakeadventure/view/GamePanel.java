@@ -22,9 +22,11 @@ public class GamePanel extends JPanel implements ActionListener {
     private int delay;
     private Timer timer;
     private GameManager gameManager;
+    private GameWindow gameWindow;
 
-    public GamePanel(GameManager gameManager) {
+    public GamePanel(GameManager gameManager, GameWindow gameWindow) {
         this.gameManager = gameManager;
+        this.gameWindow = gameWindow;
         this.delay = 177;
         this.setPreferredSize(new Dimension(gameManager.getWidth(),
                 gameManager.getHeight()));
@@ -89,8 +91,10 @@ public class GamePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (!gameManager.checkGameEnd()) {
             gameManager.moveSnake();
-            gameManager.checkEatingFruit();
-            gameManager.checkCollission();
+            if (gameManager.checkEatingFruit()) {
+                gameWindow.updateEatenFrCnLabel();
+            }
+            gameManager.checkCollision();
         } else {
             timer.stop();
         }
