@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class DatabaseManager {
-    private static Connection connection;
-    private static PreparedStatement preparedStatement;
+    private Connection connection;
 
     public DatabaseManager() {
         String url = "jdbc:mysql://localhost:3306/highestscore_schema";
@@ -21,7 +20,7 @@ public class DatabaseManager {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, user, pass);
+            this.connection = DriverManager.getConnection(url, user, pass);
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -43,7 +42,7 @@ public class DatabaseManager {
     public void saveScore(String playerName, int playerScore) {
         String query = "INSERT INTO players_score (playername, playerscore) VALUES (?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(query)) {
             preparedStatement.setString(1, playerName);
             preparedStatement.setInt(2, playerScore);
             preparedStatement.executeUpdate();
@@ -57,7 +56,7 @@ public class DatabaseManager {
 
         String query = "SELECT playername, playerscore FROM players_score ORDER BY playerscore DESC LIMIT 10";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(query);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
