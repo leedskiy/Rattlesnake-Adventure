@@ -6,10 +6,13 @@ import rattlesnakeadventure.db.DatabaseManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class MenuBar extends JMenuBar {
     private JMenuItem menuRestart;
+    private JMenuItem menuTop10;
     private ArrayList<Window> windows;
     private DatabaseManager databaseManager;
 
@@ -19,10 +22,11 @@ public class MenuBar extends JMenuBar {
 
         JMenu menu = new JMenu("Menu");
 
-        JMenuItem menuTop10 = new JMenuItem("Top10 scoreboard");
-        menuTop10.addActionListener(showTop10List());
+        this.menuTop10 = new JMenuItem("Top10 scoreboard");
+        this.menuTop10.addActionListener(showTop10List());
 
         this.menuRestart = new JMenuItem("Restart");
+        this.menuRestart.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
         this.menuRestart.setEnabled(false);
 
         JMenuItem menuExit = new JMenuItem("Exit");
@@ -52,6 +56,10 @@ public class MenuBar extends JMenuBar {
                 windows.add(top10Window);
             }
         };
+    }
+
+    public JMenuItem getMenuTop10() {
+        return this.menuTop10;
     }
 
     public JMenuItem getMenuRestart() {

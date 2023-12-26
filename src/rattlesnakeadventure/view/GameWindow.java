@@ -49,7 +49,9 @@ public class GameWindow extends Window {
         // menuBar
         this.menuBar = new MenuBar(windows, databaseManager);
         setJMenuBar(this.menuBar);
+        JMenuItem top10 = this.menuBar.getMenuTop10();
         JMenuItem res = this.menuBar.getMenuRestart();
+        top10.setEnabled(false);
         res.setEnabled(true);
         res.addActionListener(e -> handleRestart());
 
@@ -89,7 +91,7 @@ public class GameWindow extends Window {
         this.setVisible(true);
     }
 
-    private void handleRestart() {
+    public void handleRestart() {
         this.restart = true;
         this.timer.stop();
         this.gameManager.setGameEnd(true);

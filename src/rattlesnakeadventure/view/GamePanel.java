@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import rattlesnakeadventure.model.Coordinate;
 import rattlesnakeadventure.model.GameManager;
-import rattlesnakeadventure.model.Snake;
 import rattlesnakeadventure.model.object.GameObject;
 import rattlesnakeadventure.model.object.Rock;
 
