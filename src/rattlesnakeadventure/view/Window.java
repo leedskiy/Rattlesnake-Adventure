@@ -21,8 +21,8 @@ public class Window extends JFrame {
             }
         });
 
-        // URL url = Window.class.getResource("appicon.png");
-        // setIconImage(Toolkit.getDefaultToolkit().getImage(url));
+        URL url = Window.class.getResource("/rattlesnakeadventure/img/appicon.png");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(url));
     }
 
     protected void doOnExit() {
