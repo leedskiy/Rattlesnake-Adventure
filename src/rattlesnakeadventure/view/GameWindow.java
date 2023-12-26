@@ -7,14 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.TreeUI;
 
+import rattlesnakeadventure.db.DatabaseManager;
 import rattlesnakeadventure.model.GameManager;
 
 public class GameWindow extends Window {
@@ -30,10 +30,12 @@ public class GameWindow extends Window {
     private JPanel gamePanel;
     private ArrayList<Window> windows;
     private GameManager gameManager;
+    private DatabaseManager databaseManager;
 
     public GameWindow(ArrayList<Window> windows, int cellSize, int width, int height, int rocksCount) {
         setTitle("Rattlesnake Adventure / game");
         this.windows = windows;
+        this.databaseManager = new DatabaseManager();
         this.cellSize = cellSize;
         this.width = width;
         this.height = height;
@@ -108,6 +110,26 @@ public class GameWindow extends Window {
         });
 
         this.timer.start();
+    }
+
+    public void displayGameEnd() {
+        this.timer.stop();
+        String playerName = "";
+
+        do {
+            playerName = JOptionPane.showInputDialog(this, "Game Over! Enter your name:");
+
+            if (playerName == null) { // cancel
+                this.dispose();
+                windows.remove(this);
+                return;
+            }
+
+        } while (playerName.trim().isEmpty());
+
+        databaseManager.saveScore(playerName, gameManager.getSnakeEaFrCount());
+        this.dispose();
+        windows.remove(this);
     }
 
     @Override
