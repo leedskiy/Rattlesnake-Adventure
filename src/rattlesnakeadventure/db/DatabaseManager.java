@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class DatabaseManager {
@@ -48,5 +50,27 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<String> readTop10Players() {
+        ArrayList<String> topPlayers = new ArrayList<>();
+
+        String query = "SELECT playername, playerscore FROM players_score ORDER BY playerscore DESC LIMIT 10";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String playerName = resultSet.getString("playername");
+                int playerScore = resultSet.getInt("playerscore");
+                String playerInfo = playerName + " " + playerScore;
+                topPlayers.add(playerInfo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topPlayers;
     }
 }

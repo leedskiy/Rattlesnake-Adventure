@@ -22,6 +22,7 @@ public class GameWindow extends Window {
     private int width;
     private int height;
     private int rocksCount;
+    private boolean restart;
     private MenuBar menuBar;
     private Timer timer;
     private int elapsedTimeInSeconds;
@@ -32,19 +33,21 @@ public class GameWindow extends Window {
     private GameManager gameManager;
     private DatabaseManager databaseManager;
 
-    public GameWindow(ArrayList<Window> windows, int cellSize, int width, int height, int rocksCount) {
+    public GameWindow(ArrayList<Window> windows, DatabaseManager databaseManager,
+            int cellSize, int width, int height, int rocksCount) {
         setTitle("Rattlesnake Adventure / game");
         this.windows = windows;
-        this.databaseManager = new DatabaseManager();
+        this.databaseManager = databaseManager;
         this.cellSize = cellSize;
         this.width = width;
         this.height = height;
         this.rocksCount = rocksCount;
+        this.restart = false;
         this.gameManager = new GameManager(cellSize, width, height, rocksCount);
         this.gameManager.setGameEnd(false);
 
         // menuBar
-        this.menuBar = new MenuBar(windows);
+        this.menuBar = new MenuBar(windows, databaseManager);
         setJMenuBar(this.menuBar);
         JMenuItem res = this.menuBar.getMenuRestart();
         res.setEnabled(true);
@@ -64,6 +67,7 @@ public class GameWindow extends Window {
         // gamePanel
         this.gamePanel = new GamePanel(this.gameManager, this);
 
+        // contentPane
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(topPanel, BorderLayout.NORTH);
         getContentPane().add(gamePanel, BorderLayout.CENTER);
@@ -86,12 +90,18 @@ public class GameWindow extends Window {
     }
 
     private void handleRestart() {
+        this.restart = true;
         this.timer.stop();
         this.gameManager.setGameEnd(true);
-        Window newWindow = new GameWindow(this.windows, this.cellSize, this.width, this.height, this.rocksCount);
+        Window newWindow = new GameWindow(this.windows, this.databaseManager, this.cellSize,
+                this.width, this.height, this.rocksCount);
         newWindow.setVisible(true);
         this.dispose();
         windows.remove(this);
+    }
+
+    public boolean getRestart() {
+        return restart;
     }
 
     public void updateEatenFrCnLabel() {

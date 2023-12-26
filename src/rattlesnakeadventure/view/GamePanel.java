@@ -84,7 +84,9 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         } else {
             timer.stop();
-            gameWindow.displayGameEnd();
+            if (!gameWindow.getRestart()) {
+                gameWindow.displayGameEnd();
+            }
         }
     }
 
@@ -98,7 +100,9 @@ public class GamePanel extends JPanel implements ActionListener {
             gameManager.checkCollision();
         } else {
             timer.stop();
-            gameWindow.displayGameEnd();
+            if (!gameWindow.getRestart()) {
+                gameWindow.displayGameEnd();
+            }
         }
         repaint();
     }

@@ -10,13 +10,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
-import rattlesnakeadventure.model.GameManager;
-
-import rattlesnakeadventure.model.GameManager;
+import rattlesnakeadventure.db.DatabaseManager;
 
 public class MainWindow extends Window {
     private ArrayList<Window> windows;
-    private GameManager gameManager;
+    private DatabaseManager databaseManager;
     private int cellSize;
     private int width;
     private int height;
@@ -24,12 +22,13 @@ public class MainWindow extends Window {
 
     public MainWindow(int cellSize, int width, int height, int rocksCount) {
         this.windows = new ArrayList<Window>();
+        this.databaseManager = new DatabaseManager();
         this.cellSize = cellSize;
         this.width = width;
         this.height = height;
         this.rocksCount = rocksCount;
 
-        MenuBar menuBar = new MenuBar(windows);
+        MenuBar menuBar = new MenuBar(this.windows, this.databaseManager);
         setJMenuBar(menuBar);
 
         JLabel label = new JLabel();
@@ -50,7 +49,7 @@ public class MainWindow extends Window {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Window window = new GameWindow(windows, cellSize, width, height, rocksCount);
+                Window window = new GameWindow(windows, databaseManager, cellSize, width, height, rocksCount);
                 windows.add(window);
             }
         };

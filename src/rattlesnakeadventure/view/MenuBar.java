@@ -1,6 +1,9 @@
 package rattlesnakeadventure.view;
 
 import javax.swing.*;
+
+import rattlesnakeadventure.db.DatabaseManager;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -8,9 +11,11 @@ import java.util.ArrayList;
 public class MenuBar extends JMenuBar {
     private JMenuItem menuRestart;
     private ArrayList<Window> windows;
+    private DatabaseManager databaseManager;
 
-    public MenuBar(ArrayList<Window> windows) {
+    public MenuBar(ArrayList<Window> windows, DatabaseManager databaseManager) {
         this.windows = windows;
+        this.databaseManager = databaseManager;
 
         JMenu menu = new JMenu("Menu");
 
@@ -43,7 +48,7 @@ public class MenuBar extends JMenuBar {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Window top10Window = new Top10Window(windows);
+                Window top10Window = new Top10Window(windows, databaseManager);
                 windows.add(top10Window);
             }
         };
