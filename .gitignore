@@ -15,6 +15,3 @@ out/
 *.iml
 *.ipr
 *.iws
-
-# config 
-config.properties
